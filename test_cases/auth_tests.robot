@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     API Tests for Hotel Booking Management System
+Documentation     API Tests for auth
 ...               Note: The API always returns HTTP 200, regardless of success or failure.
 ...               Authentication success is determined by the presence of a token in the response.
 ...               Valid credentials will include a 'token' field, while invalid credentials will not.
