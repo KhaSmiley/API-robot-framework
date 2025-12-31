@@ -16,3 +16,8 @@ Auth with Only Password
     ${payload}=    Create Dictionary    password=${PASSWORD}
     ${response}=   POST On Session    auth    /auth    json=${payload}
     RETURN    ${response}
+
+Auth with Nothing
+    ${payload}=    Create Dictionary
+    ${response}=   POST On Session    auth    /auth    json=${payload}
+    RETURN    ${response}
