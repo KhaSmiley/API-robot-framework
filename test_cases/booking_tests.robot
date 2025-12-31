@@ -16,12 +16,21 @@ Booking with multiple customers
     Dictionary Should Contain Key    ${response.json()}    bookingid
 
 
-Admin get the reseveration ids
+Admin get the booking ids
     ${response}    GET On Session    auth    /booking
     Status Should Be    200    ${response}
 
 
-Admin can check reservation details
-    ${response}    Check reservation details
+Admin can check booking details
+    ${response}    Check booking details    1
     Status Should Be    200    ${response}
 
+Admin can modify a booking partially and system check
+    ${id}=    Set Variable    1
+    ${replace}=    Create Dictionary    firstname=Patricia    additionalneeds=Dinner    
+    ${response}=    Modify Booking Partially    ${id}    ${replace}
+    Status Should Be    200    ${response}
+    # System check
+    ${check}=    GET On Session    auth    /booking/${id}
+    Should Be Equal    ${check.json()['firstname']}       ${replace['firstname']}
+    Should Be Equal    ${check.json()['additionalneeds']}  ${replace['additionalneeds']}

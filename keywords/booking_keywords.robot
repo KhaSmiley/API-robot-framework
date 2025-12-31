@@ -1,5 +1,11 @@
 *** Keywords ***
 
+Get admin token
+    ${user}=    Create Dictionary    username=${USERNAME}    password=${PASSWORD}    
+    ${get_token}=   POST On Session    auth    /auth    json=${user}
+    ${token}=    Set Variable    ${get_token.json()}[token]
+    RETURN    ${token}
+
 Booking with one customer
     [Arguments]    ${firstname}    ${lastname}
     ${payload}=    Create Dictionary    firstname=${firstname}    lastname=${lastname}    totalprice=111    depositpaid=${true}
@@ -8,7 +14,15 @@ Booking with one customer
     ${response}    POST On Session    auth    /booking    json=${payload}
     RETURN    ${response}
 
-Check reservation details
+Check booking details
     [Arguments]    ${id}
     ${response}    GET On Session    auth    /booking/${id}
     RETURN    ${response}
+
+Modify Booking Partially
+    [Arguments]    ${bookingid}    ${to_replace}    ${username}=${USERNAME}    ${password}=${PASSWORD}
+    ${token}=      Get admin token
+    ${headers}=    Create Dictionary    Cookie=token=${token}    Content-Type=application/json
+    ${response}=   PATCH On Session    auth    /booking/${bookingid}    headers=${headers}    json=${to_replace}
+    Status Should Be    200    ${response}
+    RETURN      ${response}
