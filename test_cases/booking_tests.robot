@@ -10,9 +10,7 @@ Suite Setup       Create Session    auth    ${URL}
 Booking with multiple customers
     ${response}    Booking with one customer        Jean    Dupont
     Dictionary Should Contain Key    ${response.json()}    bookingid
-    Log    ${response.json()}    INFO
     ${response}    Booking with one customer        Pierre    Dubois
-    Log    ${response.json()}    INFO
     Dictionary Should Contain Key    ${response.json()}    bookingid
 
 
