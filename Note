@@ -1,4 +1,0 @@
-Librairie pour test des API = RequestsLibrary
-Pour installer pip install robotframework-requests
-
-Bonne pratique, creer des Templates dans la section keyword pour rendre le code + maintenable

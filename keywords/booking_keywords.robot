@@ -1,5 +1,11 @@
 *** Keywords ***
 
+Auth with valid credentials
+    [Arguments]    ${USERNAME}    ${PASSWORD}
+    ${payload}=    Create Dictionary    username=${USERNAME}    password=${PASSWORD}
+    ${response}=   POST On Session    auth    /auth    json=${payload}
+    RETURN    ${response}
+
 Get admin token
     ${user}=    Create Dictionary    username=${USERNAME}    password=${PASSWORD}    
     ${get_token}=   POST On Session    auth    /auth    json=${user}
@@ -19,10 +25,17 @@ Check booking details
     ${response}    GET On Session    auth    /booking/${id}
     RETURN    ${response}
 
-Modify Booking Partially
+Modify booking partially
     [Arguments]    ${bookingid}    ${to_replace}    ${username}=${USERNAME}    ${password}=${PASSWORD}
     ${token}=      Get admin token
     ${headers}=    Create Dictionary    Cookie=token=${token}    Content-Type=application/json
     ${response}=   PATCH On Session    auth    /booking/${bookingid}    headers=${headers}    json=${to_replace}
     Status Should Be    200    ${response}
     RETURN      ${response}
+
+Delete a booking
+    [Arguments]    ${bookingid}
+    ${token}=    Get admin token
+    ${headers}=    Create Dictionary    Cookie=token=${token}
+    ${response}=    DELETE On Session    auth    /booking/${bookingid}    headers=${headers}
+    RETURN    ${response}
