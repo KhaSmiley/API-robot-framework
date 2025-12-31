@@ -72,13 +72,13 @@ Complete Booking
     Should Be Equal    ${booking_details_1.json()['firstname']}    Jean
     
     # Modifier partiellement une réservation existante
-    ${booking_dates}=    Create Dictionary    checkin=2025-12-01    checkout=2026-01-01
+    ${booking_dates}=    Create Dictionary    checkin=2025-12-31    checkout=2026-01-01
     ${replace}=    Create Dictionary    bookingdates=${booking_dates}    additionalneeds=Breakfast
     ${modified_booking}=    Modify booking partially    ${id_1}    ${replace}
     
     # Confirmation systeme des modifs
     Status Should Be    200    ${modified_booking}
-    Should Be Equal    ${modified_booking.json()['bookingdates']['checkin']}    2025-12-01
+    Should Be Equal    ${modified_booking.json()['bookingdates']['checkin']}    2025-12-31
     Should Be Equal    ${modified_booking.json()['bookingdates']['checkout']}    2026-01-01
     Should Be Equal    ${modified_booking.json()['additionalneeds']}    Breakfast
 
