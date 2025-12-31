@@ -14,4 +14,8 @@ Booking with multiple customers
     ${response}    Booking with one customer        Pierre    Dubois
     Log    ${response.json()}    INFO
     Dictionary Should Contain Key    ${response.json()}    bookingid
-    
+
+
+Admin get the reseveration ids
+    ${response}    GET On Session    auth    /booking
+    Status Should Be    200    ${response}
